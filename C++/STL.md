@@ -1,8 +1,7 @@
 # 侯捷 STL
 1. 源代码 GNU 2.91
-2. 为什么 list 不能使用 ::sort() 排序 
-
-::sort() 内部实现上 使用随机访问迭代器 RandomAccessIterator
+2. 为什么 list 不能使用 ::sort() 排序  
+    ::sort() 内部实现上 使用随机访问迭代器 RandomAccessIterator
 3. 所有的算法 最终涉及元素本身的操作 就是比大小
 4. 模板 类模板 函数模板 运算符重载 特化 偏特化 ？？？
 ## STL 六大组件
