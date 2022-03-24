@@ -68,6 +68,41 @@ public:
     queue<int> que;
 };
 ```
+
+[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
+构造辅助栈
+```cpp
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    MinStack() {
+    }
+    
+    void push(int x) {
+        data.push(x);
+        if (!minSta.empty() && x >= minSta.top()) {
+            minSta.push(minSta.top());
+        } else {
+            minSta.push(x);
+        } 
+    }
+    
+    void pop() {
+        data.pop();
+        minSta.pop();
+    }
+    
+    int top() {
+        return data.top();
+    }
+    
+    int min() {
+        return minSta.top();
+    }
+    stack<int> data;
+    stack<int> minSta;
+};
+```
 [20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
 ```cpp
 switch (expression) {
