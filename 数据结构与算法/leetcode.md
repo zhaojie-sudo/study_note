@@ -166,3 +166,16 @@ vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
     return img;
 }
 ```
+
+## 数学
+[172. 阶乘后的零](https://leetcode-cn.com/problems/factorial-trailing-zeroes/) 
+```cpp
+int trailingZeroes(int n) {
+    int count = 0;
+    while (n != 0) {
+        n = n / 5;
+        count += n;
+    }
+    return count;
+}
+```
