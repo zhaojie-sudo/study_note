@@ -81,6 +81,25 @@ void bag01Problem() {
 
 递推公式的确定
 
+[1262. 可被三整除的最大和](https://leetcode-cn.com/problems/greatest-sum-divisible-by-three/)
+```cpp
+int maxSumDivThree(vector<int>& nums) {
+    vector<int> dp(3, 0);
+    vector<int> temp(3, 0);
+    for (int i = 0; i < nums.size(); i++) {
+        for (int j = 0; j < 3; j++) {
+            temp[j] = dp[j] + nums[i];
+        }
+
+        for (int j = 0; j < 3; j++) {
+            dp[temp[j] % 3] = max(dp[temp[j] % 3], temp[j]);
+        }
+    }
+
+    return dp[0];
+}
+```
+
 ## 2. 背包问题
 
 ### 2.1 01背包

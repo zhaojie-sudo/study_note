@@ -98,6 +98,26 @@ int majorityElement(vector<int>& nums) {
 }
 ```
 
+[剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
+原地排序
+```cpp
+int findRepeatNumber(vector<int>& nums) {
+    for (int i = 0; i < nums.size(); i++) {
+        while (nums[i] != i) {
+            int index = nums[i];
+            if (nums[index] == index) {
+                return index;
+            } else {
+                int temp = nums[index];
+                nums[index] = index;
+                nums[i] = temp;
+            }
+        }
+    }
+    return -1;
+}
+```
+
 ## 字典树
 [440. 字典序的第K小数字](https://leetcode-cn.com/problems/k-th-smallest-in-lexicographical-order/)
 ```cpp
@@ -176,6 +196,28 @@ int trailingZeroes(int n) {
         n = n / 5;
         count += n;
     }
+    return count;
+}
+```
+
+## 哈希表
+[454. 四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)
+```cpp
+int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+    unordered_map<int, int> map1;
+    for (int a : nums1)
+        for (int b : nums2)
+            map1[a + b]++;
+
+    int count = 0;
+    for (int c : nums3)
+        for (int d : nums4)
+        {
+            auto it = map1.find(0 - c - d);
+            if (it != map1.end())
+                count+=it->second;
+        }
+
     return count;
 }
 ```

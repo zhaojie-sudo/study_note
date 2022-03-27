@@ -73,6 +73,26 @@ vector<int> searchRange(vector<int>& nums, int target) {
     }
 ```
 和[704.二分查找](https://leetcode-cn.com/problems/binary-search/)类似 但要注意最右边元素是如何匹配的(mid中为什么要加1)
+
+[154. 寻找旋转排序数组中的最小值 II](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/)
+```cpp
+int findMin(vector<int>& nums) {
+    int left = 0, right = nums.size() - 1;
+
+    while (left < right - 1 && nums[left] >= nums[right]) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] > nums[left]) {
+            left = mid + 1;
+        } else if (nums[mid] < nums[left]){
+            right = mid;
+        } else {
+            left++;
+        }
+    }
+    return min(nums[left], nums[right]);
+}
+```
+
 ### 双指针
 [27.移除元素](https://leetcode-cn.com/problems/remove-element/)
 
@@ -184,4 +204,25 @@ string minWindow(string s, string t)
 
         return true;
     }
+```
+
+## 其他
+[剑指 Offer 04. 二维数组中的查找](https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/)
+从右上到左下
+```cpp
+bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+    if (matrix.size() == 0 || matrix[0].size() == 0) return false;
+
+    int i = 0, j = matrix[0].size() - 1;
+    while (i < matrix.size() && j >= 0) {
+        if (matrix[i][j] == target) {
+            return true;
+        } else if (matrix[i][j] < target) {
+            i++;
+        } else {
+            j--;
+        }
+    }
+    return false;
+}
 ```
