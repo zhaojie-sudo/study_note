@@ -206,6 +206,32 @@ string minWindow(string s, string t)
     }
 ```
 
+[2024. 考试的最大困扰度](https://leetcode-cn.com/problems/maximize-the-confusion-of-an-exam/)
+```cpp
+int maxConsecutiveAnswers(const string& answerKey, char cha, int k) {
+    int count = 0;
+    int len = 0;
+    int left = 0, right = 0;
+    for (; right < answerKey.size(); right++) {
+        if (answerKey[right] != cha) count++;
+        if (count > k) {
+            while (count > k) {
+                len = max(len, right - left);
+                if (answerKey[left] != cha) {
+                    count--;
+                }
+                left++;
+            }
+        }
+    }
+
+    return max(len, right - left);
+}
+int maxConsecutiveAnswers(string answerKey, int k) {
+    return max(maxConsecutiveAnswers(answerKey, 'T', k), maxConsecutiveAnswers(answerKey, 'F', k));
+}
+```
+
 ## 其他
 [剑指 Offer 04. 二维数组中的查找](https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/)
 从右上到左下

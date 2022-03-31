@@ -1,5 +1,19 @@
 # Leetcode刷题笔记
 ## 位运算
+[693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/)
+思路
+
+对输入 nn 的二进制表示右移一位后，得到的数字再与 nn 按位异或得到 aa。当且仅当输入 nn 为交替位二进制数时，aa 的二进制表示全为 11（不包括前导 00）。这里进行简单证明：当 aa 的某一位为 11 时，当且仅当 nn 的对应位和其前一位相异。当 aa 的每一位为 11 时，当且仅当 nn 的所有相邻位相异，即 nn 为交替位二进制数。
+
+将 aa 与 a + 1a+1 按位与，当且仅当 aa 的二进制表示全为 11 时，结果为 00。这里进行简单证明：当且仅当 aa 的二进制表示全为 11 时，a + 1a+1 可以进位，并将原最高位置为 00，按位与的结果为 00。否则，不会产生进位，两个最高位都为 11，相与结果不为 00。
+
+结合上述两步，可以判断输入是否为交替位二进制数。
+```cpp
+bool hasAlternatingBits(int n) {
+    long a = n ^ (n >> 1);
+    return (a & (a + 1)) == 0;
+}
+```
 [面试题 01.01. 判定字符是否唯一](https://leetcode-cn.com/problems/is-unique-lcci/)     
 1. 如果字符范围不限 应该选择 `unordered_set`
 
@@ -98,6 +112,7 @@ int majorityElement(vector<int>& nums) {
 }
 ```
 
+
 [剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
 原地排序
 ```cpp
@@ -118,6 +133,56 @@ int findRepeatNumber(vector<int>& nums) {
 }
 ```
 
+
+[1606. 找到处理最多请求的服务器](https://leetcode-cn.com/problems/find-servers-that-handled-most-number-of-requests/)
+模拟 + 有序集合 + 优先级队列
+set priority_queue 的用法
+
+```cpp
+vector<int> busiestServers(int k, vector<int>& arrival, vector<int>& load) {
+    // available 用于存放空闲处理器
+    set<int> available;
+    for (int i = 0; i < k; i++) {
+        available.insert(i);
+    }
+
+    // busy 用于存放正在忙碌得处理器得 结束时间 和 编号 
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> busy;
+
+    // request 记录每个处理器 处理请求数
+    vector<int> request(k, 0);
+
+    for (int i = 0; i < arrival.size(); i++) {
+        while (!busy.empty() && busy.top().first <= arrival[i]) {
+            available.insert(busy.top().second);
+            busy.pop();
+        }
+        if (available.empty()) {
+            continue;
+        }
+        auto p = available.lower_bound(i % k);
+        if (p == available.end()) {
+            p = available.begin();
+        }
+        request[*p]++;
+        busy.emplace(arrival[i] + load[i], *p);
+        available.erase(p);
+    }
+
+    vector<int> res;
+    int maxValue = 0;
+    for (int i = 0; i < k; i++) {
+        maxValue = max(maxValue, request[i]);
+    }
+    for (int i = 0; i < k; i++) {
+        if (request[i] == maxValue) {
+            res.push_back(i);
+        }
+    } 
+
+    return res;
+}
+```
 ## 字典树
 [440. 字典序的第K小数字](https://leetcode-cn.com/problems/k-th-smallest-in-lexicographical-order/)
 ```cpp
