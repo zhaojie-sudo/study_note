@@ -138,6 +138,35 @@ bool backspaceCompare(string s, string t)
         s.resize(slow);
     }
 ```
+
+[剑指 Offer 57 - II. 和为s的连续正数序列](https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/)  
+```cpp
+vector<vector<int>> findContinuousSequence(int target) {
+    vector<vector<int>> res;
+    if (target < 3) return res;
+    int left = 1, right = 2;
+    int sum = left + right;
+    while (left <= target / 2) {
+        if (sum == target) {
+            vector<int> temp;
+            for (int i = left; i <= right; i++) {
+                temp.push_back(i);
+            }
+            res.push_back(temp);
+            right++;
+            sum += right;
+        } else if (sum < target) {
+            right++;
+            sum += right;
+        } else {
+            sum -= left;
+            left++;
+        }
+    }
+
+    return res;
+}
+```
 ### 滑动窗口
 [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/)
 

@@ -29,7 +29,7 @@
 ## 关键路径
 
 ## leetcode
-[841. 钥匙和房间](https://leetcode-cn.com/problems/keys-and-rooms/)
+[841. 钥匙和房间](https://leetcode-cn.com/problems/keys-and-rooms/)  
 dfs
 ```cpp
 void dfs(vector<vector<int>>& rooms, vector<int>& visited, int i) {
@@ -82,6 +82,33 @@ bool canVisitAllRooms(vector<vector<int>>& rooms) {
         }
     }
     return true;
+}
+```
+
+[剑指 Offer 12. 矩阵中的路径](https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof/)  
+dfs
+```cpp
+bool dfs(vector<vector<char>>& board, const string& word, int i, int j, int k) {
+    if (i < 0 || i >= board.size() || j < 0 || j >= board[i].size() || board[i][j] != word[k]) return false;
+    if (k == word.size() - 1) return true;
+    board[i][j] = '\0';
+    bool res = dfs(board, word, i, j - 1, k + 1) || dfs(board, word, i, j + 1, k + 1) || dfs(board, word, i - 1, j, k + 1) || dfs(board, word, i + 1, j, k + 1);
+    board[i][j] = word[k];
+    return res;
+}
+bool exist(vector<vector<char>>& board, string word) {
+    int m = board.size();
+    int n = board[0].size();
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (board[i][j] == word[0]) {
+                if (dfs(board, word, i, j, 0)) return true;
+            }
+        }
+    }
+
+    return false;
 }
 ```
 
