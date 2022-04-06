@@ -112,6 +112,65 @@ bool exist(vector<vector<char>>& board, string word) {
 }
 ```
 
+[310. 最小高度树](https://leetcode-cn.com/problems/minimum-height-trees/)  
+bfs
+```cpp
+struct Node {
+    int deg = 0;
+    vector<int> next;
+};
+vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+    vector<int> res;
+    vector<Node> node(n);
+    for (const auto& vec : edges) {
+        node[vec[0]].deg++;
+        node[vec[0]].next.push_back(vec[1]);
+        node[vec[1]].deg++;
+        node[vec[1]].next.push_back(vec[0]);
+    }
+
+    /* for (int i = 0; i < n; i++) {
+        cout << node[i].deg << " : ";
+        for (int j = 0; j < node[i].next.size(); j++) {
+            cout << node[i].next[j] << " ";
+        }
+        cout << endl;
+    } */
+    vector<int> visited(n, 0);
+    queue<int> que;
+    for (int i = 0; i < n; i++) {
+        if (node[i].deg <= 1) {
+            que.push(i);
+            visited[i] = 1;
+        }
+    }
+
+    int height = 0;
+    while (!que.empty()) {
+        res.clear();
+        int size = que.size();
+        for (int i = 0; i < size; i++) {
+            int index = que.front();
+            que.pop();
+            res.push_back(index);
+            for (int j = 0; j < node[index].next.size(); j++) {
+                int nextIndex = node[index].next[j];
+                if (visited[nextIndex] == 0) {
+                    node[nextIndex].deg--;
+                    if (node[nextIndex].deg <= 1) {
+                        que.push(nextIndex);
+                        visited[nextIndex] = 1;
+                    }
+                }
+            }
+        }
+        height++;
+    }
+    cout << height << endl;
+    return res;
+}
+```
+
 ## 模拟
 [463. 岛屿的周长](https://leetcode-cn.com/problems/island-perimeter/)  
 
