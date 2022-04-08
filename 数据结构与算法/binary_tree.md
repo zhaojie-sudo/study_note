@@ -586,3 +586,26 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
     return sortedArrayToBST(nums, 0, nums.size() - 1);
 }
 ```
+
+[652. 寻找重复的子树](https://leetcode-cn.com/problems/find-duplicate-subtrees/)  
+二叉树序列化 + 哈希表 + dfs  
+每棵不同子树的序列化结果都是唯一的。
+```cpp
+vector<TreeNode*> res;
+unordered_map<string, int> umap;
+string dfs(TreeNode* cur) {
+    if (cur == nullptr) return "";
+    string str = to_string(cur -> val) + "-" + dfs(cur -> left) + "-" + dfs(cur -> right);
+    if (umap[str] == 1) {
+        res.push_back(cur);
+    }
+    umap[str]++;
+    return str;
+}
+vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+    if (root == nullptr) return res;
+    dfs(root);
+    // cout << dfs(root) << endl;
+    return res;
+}
+```
