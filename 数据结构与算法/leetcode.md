@@ -303,6 +303,31 @@ int countPrimes(int n) {
     return primes.size();
 }
 ```
+
+[780. 到达终点](https://leetcode-cn.com/problems/reaching-points/)  
+辗转相除的思想
+```cpp
+bool reachingPoints(int sx, int sy, int tx, int ty) {
+    while (tx > sx && ty > sy) { /* 辗转相除法 拿较大的减去较小的 */
+        if (tx == ty) {
+            return false;
+        } else if (tx > ty) {
+            tx = tx % ty;
+        } else {
+            ty = ty % tx;
+        }
+    }
+
+    if (tx == sx && ty == sy) return true;
+    else if (tx == sx && ty > sy) {
+        return ty % tx == sy % tx;
+    } else if (ty == sy && tx > sx) {
+        return tx % ty == sx % ty;
+    } else {
+        return false;
+    }
+}
+```
 ## 哈希表
 [454. 四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)
 ```cpp

@@ -609,3 +609,21 @@ vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
     return res;
 }
 ```
+
+[110. 平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)  
+一种时间和空间复杂度都是O(n)的做法
+```cpp
+int height(TreeNode* root) {
+    if (root == nullptr) return 0;
+    int leftHeight = height(root -> left);
+    int rightHeight = height(root -> right);
+    if (leftHeight == -1 || rightHeight == -1 || abs(leftHeight - rightHeight) > 1) {
+        return -1;
+    }
+    return max(leftHeight, rightHeight) + 1;
+}
+bool isBalanced(TreeNode* root) {
+    if (root == nullptr) return true;
+    return height(root) >= 0;
+}
+```
