@@ -1,5 +1,6 @@
 # Leetcode刷题笔记
 ## 位运算
+- n & (n−1)，其预算结果恰为把 n 的二进制位中的最低位的 1 变为 0 之后的结果。
 [693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/)
 思路
 
@@ -62,6 +63,17 @@ int singleNumber(vector<int>& nums) {
 }
 ```
 
+[剑指 Offer 65. 不用加减乘除做加法](https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/)  
+```cpp
+int add(int a, int b) {
+    while (b) {
+        int c = (unsigned int)(a & b) << 1;
+        a = a ^ b;
+        b = c;
+    }
+    return a;
+}
+```
 
 ## 其他
 
@@ -326,6 +338,28 @@ bool reachingPoints(int sx, int sy, int tx, int ty) {
     } else {
         return false;
     }
+}
+```
+
+[50. Pow(x, n)](https://leetcode-cn.com/problems/powx-n/)  
+注意迭代写法 O(1)的空间复杂度
+```cpp
+double myPow(double x, int n) {
+    if (n == 0) return 1;
+    long long N = n;
+    return N > 0 ? quick(x, N) : 1.0 / quick(x, -N);
+}
+double quick(double x, long long n) {
+    double res = 1.0;
+    double contribute = x;
+    while (n > 0) {
+        if (n % 2 == 1) {
+            res *= contribute;
+        }
+        contribute *= contribute;
+        n /= 2;
+    }
+    return res;
 }
 ```
 ## 哈希表

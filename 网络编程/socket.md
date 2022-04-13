@@ -1,8 +1,7 @@
 # Socket 网络编程
 
 ## 0. 问题
-1. socket 编程头文件定义
-2. sockaddr sockaddr_in 区别
+
 
 # Chapter1 基础知识
 
