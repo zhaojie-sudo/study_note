@@ -362,6 +362,21 @@ double quick(double x, long long n) {
     return res;
 }
 ```
+
+[剑指 Offer 62. 圆圈中最后剩下的数字](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)  
+两种思路 队列模拟 会超时
+数学 F(n,m) = (m + F(n - 1, m)) % n
+```cpp
+int lastRemaining(int n, int m) {
+    if (n == 1) return 0;
+    int res = 0;
+    for (int i = 2; i <= n; i++) {
+        res = (m + res) % i;
+    }
+
+    return res;
+}
+```
 ## 哈希表
 [454. 四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)
 ```cpp

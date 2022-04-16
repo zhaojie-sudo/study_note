@@ -153,8 +153,8 @@ vector<vector<int>> findContinuousSequence(int target) {
                 temp.push_back(i);
             }
             res.push_back(temp);
-            right++;
-            sum += right;
+            sum -= left;
+            left++;
         } else if (sum < target) {
             right++;
             sum += right;
