@@ -627,3 +627,17 @@ bool isBalanced(TreeNode* root) {
     return height(root) >= 0;
 }
 ```
+
+[剑指 Offer 26. 树的子结构](https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/)
+```cpp
+bool isSubStructure(TreeNode* A, TreeNode* B) {
+    if (A == nullptr || B == nullptr) return false;
+    if (A -> val == B -> val) {
+        bool flag1 = B -> left == nullptr ? true : (A -> left && B -> left -> val == A -> left -> val && isSubStructure(A -> left, B -> left));
+        bool flag2 = B -> right == nullptr ? true : A -> right && B -> right -> val == A -> right -> val && isSubStructure(A -> right, B -> right);
+        // cout << A -> val << " " << flag1 << " " << flag2 << endl;
+        if (flag1 && flag2) return true;
+    } 
+    return isSubStructure(A -> left, B) || isSubStructure(A -> right, B);
+}
+```
