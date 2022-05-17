@@ -609,6 +609,38 @@ vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
     return res;
 }
 ```
+[449. 序列化和反序列化二叉搜索树](https://leetcode.cn/problems/serialize-and-deserialize-bst/)
+```cpp
+int index = 0;
+int n;
+
+// Encodes a tree to a single string.
+string serialize(TreeNode* root) {
+    if (root == nullptr) return "n";
+    return to_string(root -> val) + "+" + serialize(root -> left) + "+" + serialize(root -> right);
+}
+
+// Decodes your encoded data to tree.
+TreeNode* deserialize(const string& data) {
+    n = data.size();
+    if (index >= n) return nullptr;
+
+    string temp = "";
+    while (index < n && data[index] != '+') {
+        temp += data[index];
+        ++index;
+    }
+
+    ++index;
+    if (temp == "n") return nullptr;
+    // cout << data << endl;
+    TreeNode* root = new TreeNode(stoi(temp));
+
+    root -> left = deserialize(data);
+    root -> right = deserialize(data);
+    return root;
+}
+```
 
 [110. 平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)  
 一种时间和空间复杂度都是O(n)的做法
