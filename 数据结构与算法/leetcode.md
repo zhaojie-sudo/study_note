@@ -252,6 +252,20 @@ int lastRemaining(int n, int m) {
     return res;
 }
 ```
+
+[462. 最少移动次数使数组元素相等 II](https://leetcode.cn/problems/minimum-moves-to-equal-array-elements-ii/)  
+中位数
+```cpp
+int minMoves2(vector<int>& nums) {
+    int res = 0;
+    sort(nums.begin(), nums.end());
+
+    int avg = nums[nums.size() / 2];
+    for (auto num : nums) res += abs(num - avg);
+    return res;
+}
+```
+
 ## 哈希表
 [454. 四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)
 ```cpp

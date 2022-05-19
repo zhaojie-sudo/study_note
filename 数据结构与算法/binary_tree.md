@@ -421,6 +421,33 @@ TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
     return buildTree(inorder, 0, inorder.size() - 1, map);
 }
 ```
+
+[剑指 Offer 33. 二叉搜索树的后序遍历序列](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/)
+```cpp
+bool verifyPostorder(const vector<int>& inorder, unordered_map<int, int>& map, int left, int right) {
+    if (left > right) return true;
+    int minIndex = left;
+    int maxIndex = right;
+    for (int i = left; i <= right; i++) {
+        minIndex = map[inorder[minIndex]] < map[inorder[i]] ? minIndex : i; // 
+        maxIndex = map[inorder[maxIndex]] > map[inorder[i]] ? maxIndex : i;
+    }
+
+    if (map[inorder[maxIndex]] - map[inorder[minIndex]] > right - left) return false;
+    if (maxIndex != left && maxIndex != right && map[inorder[left]] > map[inorder[right]]) return false;
+    return verifyPostorder(inorder, map, left, maxIndex - 1) && verifyPostorder(inorder, map, maxIndex + 1, right);
+}
+bool verifyPostorder(vector<int>& postorder) {
+    if (postorder.size() <= 1) return true;
+    unordered_map<int, int> map;
+    for (int i = 0; i < postorder.size(); i++) {
+        map[postorder[i]] = i; // key 在 postorder 中的位置
+    }
+    sort(postorder.begin(), postorder.end());
+    return verifyPostorder(postorder, map, 0, postorder.size() - 1);
+}
+```
+
 [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/)
 
 BST 中序遍历后严格递增
