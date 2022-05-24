@@ -2,6 +2,44 @@
 
 ## 其他
 
+[剑指 Offer 29. 顺时针打印矩阵](https://leetcode.cn/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)
+```cpp
+vector<int> result;
+vector<int> spiralOrder(vector<vector<int>> &matrix)
+{
+    if (matrix.size() == 0 || matrix[0].size() == 0) return result;
+    spiralOtder(matrix, 0, matrix[0].size() - 1, 0, matrix.size() - 1);
+    return result;
+}
+void spiralOtder(vector<vector<int>> &matrix, int left, int right, int top, int bottom)
+{
+    if (left > right || top > bottom)
+        return;
+    if (left == right)
+    {
+        for (int i = top; i <= bottom; i++)
+            result.push_back(matrix[i][right]);
+        return;
+    }
+    if (top == bottom)
+    {
+        for (int i = left; i <= right; i++)
+            result.push_back(matrix[top][i]);
+        return;
+    }
+    for (int i = left; i < right; i++)
+        result.push_back(matrix[top][i]);
+    for (int i = top; i < bottom; i++)
+        result.push_back(matrix[i][right]);
+    for (int i = right; i > left; i--)
+        result.push_back(matrix[bottom][i]);
+    for (int i = bottom; i > top; i--)
+        result.push_back(matrix[i][left]);
+    spiralOtder(matrix, left + 1, right - 1, top + 1, bottom - 1);
+    // cout << "hello" << endl;
+}
+```
+
 [161.多数元素](https://leetcode-cn.com/problems/majority-element/)
 1. 哈希表
 2. sort
@@ -141,6 +179,29 @@ vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
 ```
 
 ## 数学
+[剑指 Offer 49. 丑数](https://leetcode.cn/problems/chou-shu-lcof/)
+```cpp
+int nthUglyNumber(int n) {
+    vector<int> dp(n + 1, 0);
+    dp[1] = 1;
+    int p2 = 1, p3 = 1, p5 = 1;
+    for (int i = 2; i <= n; i++) {
+        int num2 = dp[p2] * 2;
+        int num3 = dp[p3] * 3;
+        int num5 = dp[p5] * 5;
+
+        dp[i] = min(num2, min(num3, num5));
+        if (dp[i] == num2) p2++;
+        if (dp[i] == num3) p3++;
+        if (dp[i] == num5) p5++;
+        // cout << num2 << " " << num3 << " " << num5 << " " << dp[i] << endl;
+        // cout << p2 << " " << p3 << " " << p5 << " " << dp[i] << endl;
+        // cout << "--------------" << endl;
+    }
+
+    return dp[n];
+}
+```
 [172. 阶乘后的零](https://leetcode-cn.com/problems/factorial-trailing-zeroes/) 
 ```cpp
 int trailingZeroes(int n) {

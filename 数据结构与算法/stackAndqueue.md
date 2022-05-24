@@ -103,6 +103,39 @@ public:
     stack<int> minSta;
 };
 ```
+
+[剑指 Offer 59 - II. 队列的最大值](https://leetcode.cn/problems/dui-lie-de-zui-da-zhi-lcof/)
+```cpp
+class MaxQueue {
+public:
+    MaxQueue() {}
+    
+    int max_value() {
+        return que.empty() ? -1 : que.front();
+    }
+    
+    void push_back(int value) {
+        while (!que.empty() && que.back() < value) {
+            que.pop_back();
+        }
+        que.push_back(value);
+
+        data.push(value);
+    }
+    
+    int pop_front() {
+        if (data.empty()) return -1;
+        int res = data.front();
+        if (!que.empty() && res >= que.front()) que.pop_front();
+        data.pop();
+        return res;
+    }
+private:
+    deque<int> que;
+    queue<int> data;
+};
+```
+
 [20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
 ```cpp
 switch (expression) {
