@@ -179,6 +179,95 @@ vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
 ```
 
 ## 数学
+[剑指 Offer 14- II. 剪绳子 II](https://leetcode.cn/problems/jian-sheng-zi-ii-lcof/)
+```cpp
+int cuttingRope(int n) {
+    if (n <= 3) {
+        return n - 1;
+    }
+
+    //最大int 2147483647，为防止在某一次 mul乘3已经溢出，类型需要设为long
+    long mul = 1;
+
+    //3,3,3,3,3,4
+    //3,3,3,3,3,3
+    //3,3,3,3,3,2
+    //3,3,3,3,3,1  X 此种情况算在和前面 3+1 和为 4
+    while (n > 4) {
+        //每次乘积后取余防止大数
+        mul = mul * 3 % 1000000007;
+
+        n -= 3;
+    }
+    return (int) (mul * n % 1000000007);
+}
+```
+
+[剑指 Offer 43. 1～n 整数中 1 出现的次数](https://leetcode.cn/problems/1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof/)
+```cpp
+int countDigitOne(int n) {
+    vector<int> count(10, 0);
+    count[1] = 1;
+    for (int i = 2; i < count.size(); i++) {
+        count[i] = pow(10, i - 1) + 9 * count[i - 1] + count[i - 1];
+        // cout << count[i] << " ";
+    }
+    // cout << endl;
+
+    return countDigitOne(count, n);
+}
+
+int countDigitOne(const vector<int>& count, int n) {
+    if (n == 0) return 0;
+    if (n < 10) return 1;
+
+    int res = 0;
+    string str = to_string(n);        
+    res += count[str.size() - 1];
+    
+    cout << res << endl;
+
+    int num = n - (str[0] - '0') * pow(10, str.size() - 1);
+
+    res += str[0] - '0' == 1 ? num + 1 : pow(10, str.size() - 1);
+    if (str[0] - '0' > 1) {
+        res += (str[0] - '0' - 1) * count[str.size() - 1];
+    }
+
+    // cout << n << " " << num << " " << res << endl;
+
+    return res + countDigitOne(count, num);           
+}
+```
+[剑指 Offer 44. 数字序列中某一位的数字](https://leetcode.cn/problems/shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof/)
+```cpp
+int findNthDigit(int n) {
+    if (n < 10) return n;
+
+    vector<int> start(10, 0);  
+    start[1] = 1;
+    for (int i = 2; i < 10; i++) {
+        start[i] = 9 * pow(10, i - 2) * (i - 1) + start[i - 1];
+        // cout << start[i] << " ";
+    }
+    // cout << endl;
+
+    int i = start.size() - 1;
+    while (n < start[i]) i--;
+    // cout << i << endl;
+
+    int index = (n - start[i]) % i;
+    // cout << index << endl;
+
+    int num = pow(10, i - 1) + (n - start[i]) / i;
+    // cout << num << endl;
+
+    string str = to_string(num);
+    // cout << str << endl;
+
+    return str[index] - '0';
+}
+```
 [剑指 Offer 49. 丑数](https://leetcode.cn/problems/chou-shu-lcof/)
 ```cpp
 int nthUglyNumber(int n) {
