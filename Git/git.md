@@ -1,6 +1,5 @@
 # 常用命令
 
-3. 
 4. `git push\pull` 将本地仓库 push 到 Github / 将 Github 仓库同步到本地
 
 # 常见问题
